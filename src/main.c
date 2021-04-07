@@ -1,4 +1,5 @@
 #include <raylib.h>
+#include <rlgl.h>
 #include <janet.h>
 
 #include "types.h"

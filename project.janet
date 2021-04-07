@@ -21,13 +21,13 @@
 
 (declare-native
   :name "jaylib"
-
+  
   :cflags [;default-cflags ;cflags]
-
+  
   :defines {"PLATFORM_DESKTOP" true "_POSIX_C_SOURCE" "200809L"}
-
+  
   :source ["src/main.c"
-
+           
            # raylib sources
            "raylib/src/core.c"
            "raylib/src/models.c"
@@ -37,13 +37,14 @@
            "raylib/src/text.c"
            "raylib/src/textures.c"
            "raylib/src/utils.c"]
-
+  
   :headers ["src/core.h"
             "src/types.h"
             "src/audio.h"
             "src/gestures.h"
             "src/text.h"
             "src/image.h"
+            "src/rlgl.h"
             "src/shapes.h"
             "src/3d.h"]
 

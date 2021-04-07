@@ -24,6 +24,9 @@
 [x] int GetMonitorHeight(int monitor)
 [x] int GetMonitorPhysicalWidth(int monitor)
 [x] int GetMonitorPhysicalHeight(int monitor)
+[ ] int GetMonitorRefreshRate(int monitor);
+[ ] Vector2 GetWindowPosition(void);
+[x] Vector2 GetWindowScaleDPI(void);
 [x] const char *GetMonitorName(int monitor)
 [x] const char *GetClipboardText(void)
 [x] void SetClipboardText(const char *text)

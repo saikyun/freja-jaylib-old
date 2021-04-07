@@ -892,6 +892,7 @@ static JanetReg core_cfuns[] = {
     {"get-monitor-height", cfun_GetMonitorHeight, NULL},
     {"get-monitor-physical-width", cfun_GetMonitorPhysicalWidth, NULL},
     {"get-monitor-physical-height", cfun_GetMonitorPhysicalHeight, NULL},
+    {"get-window-scale-dpi", cfun_GetWindowScaleDPI, NULL},
     {"get-monitor-name", cfun_GetMonitorName, NULL},
     {"get-clipboard-text", cfun_GetClipboardText, NULL},
     {"set-clipboard-text", cfun_SetClipboardText, NULL},

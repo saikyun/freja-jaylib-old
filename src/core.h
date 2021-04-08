@@ -510,6 +510,19 @@ static Janet cfun_GetKeyPressed(int32_t argc, Janet *argv) {
     return janet_wrap_integer(key);
 }
 
+static Janet cfun_GetCharPressed(int32_t argc, Janet *argv) {
+    (void) argv;
+    janet_arity(argc, 0, 1);
+    int key = GetCharPressed();
+    if (argc == 0 || !janet_truthy(argv[1])) {
+        for (unsigned i = 0; i < (sizeof(key_defs) / sizeof(KeyDef)); i++) {
+            if (key_defs[i].key == key)
+                return janet_ckeywordv(key_defs[i].name);
+        }
+    }
+    return janet_wrap_integer(key);
+}
+
 static Janet cfun_SetExitKey(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 1);
     int key = jaylib_getkey(argv, 0);
@@ -920,6 +933,7 @@ static JanetReg core_cfuns[] = {
     {"key-up?", cfun_IsKeyUp, NULL},
     {"key-down?", cfun_IsKeyDown, NULL},
     {"get-key-pressed", cfun_GetKeyPressed, NULL},
+    {"get-char-pressed", cfun_GetCharPressed, NULL},
     {"set-exit-key", cfun_SetExitKey, NULL},
     {"gamepad-available?", cfun_IsGamepadAvailable, NULL},
     {"gamepad-name?", cfun_IsGamepadName, NULL},

@@ -95,6 +95,7 @@
 [x] bool IsKeyReleased(int key)
 [x] bool IsKeyUp(int key)
 [x] int GetKeyPressed(void)
+[x] int GetCharPressed(void)
 [x] void SetExitKey(int key)
 
 // Input-related functions: gamepads

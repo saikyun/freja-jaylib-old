@@ -67,6 +67,15 @@ static Janet cfun_rlTranslatef(int32_t argc, Janet *argv) {
     return janet_wrap_nil();
 }
 
+static Janet cfun_rlScalef(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 3);
+    float x = (float) janet_getnumber(argv, 0);
+    float y = (float) janet_getnumber(argv, 1);
+    float z = (float) janet_getnumber(argv, 2);
+    rlScalef(x, y, z);
+    return janet_wrap_nil();
+}
+
 static Janet cfun_rlEnableScissorTest(int32_t argc, Janet *argv) {
     (void) argv;
     janet_fixarity(argc, 0);
@@ -115,6 +124,7 @@ static JanetReg rlgl_cfuns[] = {
     {"rl-pop-matrix", cfun_rlPopMatrix, NULL},
     {"rl-load-identity", cfun_rlLoadIdentity, NULL},
     {"rl-translatef", cfun_rlTranslatef, NULL},
+    {"rl-scalef", cfun_rlScalef, NULL},
     {"rl-enable-scissor-test", cfun_rlEnableScissorTest, NULL},
     {"rl-scissor", cfun_rlScissor, NULL},
     {"rl-mult-matrixf-screen-scale", cfun_rlMultMatrixfScreenScale, NULL},

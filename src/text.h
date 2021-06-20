@@ -15,6 +15,16 @@ static const char *jaylib_getcstring(const Janet *argv, int32_t n) {
     return janet_getcstring(argv, n);
 }
 
+static const unsigned char *jaylib_getunsignedcstring(const Janet *argv, int32_t n) {
+    if (janet_checktype(argv[n], JANET_BUFFER)) {
+        JanetBuffer *buf = janet_unwrap_buffer(argv[n]);
+        janet_buffer_push_u8(buf, 0);
+        buf->count--;
+        return (const unsigned char *)buf->data;
+    }
+    return (const unsigned char *)janet_getcstring(argv, n);
+}
+
 static Janet cfun_GetFontDefault(int32_t argc, Janet *argv) {
     (void) argv;
     janet_fixarity(argc, 0);
@@ -42,6 +52,24 @@ static Janet cfun_LoadFontEx(int32_t argc, Janet *argv) {
     }
     Font *font = janet_abstract(&AT_Font, sizeof(Font));
     *font = LoadFontEx(fileName, fontSize, raw_ints, ints.len);
+    janet_sfree(raw_ints);
+    return janet_wrap_abstract(font);
+}
+
+static Janet cfun_LoadFontFromMemory(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 5);
+
+    const char *fileType = janet_getcstring(argv, 0);
+    const unsigned char *fileData = jaylib_getunsignedcstring(argv, 1);
+    int dataSize = janet_getinteger(argv, 2);
+    int fontSize = janet_getinteger(argv, 3);
+    JanetView ints = janet_getindexed(argv, 4);
+    int *raw_ints = janet_smalloc(sizeof(int) * ints.len);
+    for (int32_t i = 0; i < ints.len; i++) {
+        raw_ints[i] = janet_getinteger(ints.items, i);
+    }
+    Font *font = janet_abstract(&AT_Font, sizeof(Font));
+    *font = LoadFontFromMemory(fileType, fileData, dataSize, fontSize, raw_ints, ints.len);
     janet_sfree(raw_ints);
     return janet_wrap_abstract(font);
 }
@@ -150,6 +178,7 @@ static JanetReg text_cfuns[] = {
     {"get-font-default", cfun_GetFontDefault, NULL},
     {"load-font", cfun_LoadFont, NULL},
     {"load-font-ex", cfun_LoadFontEx, NULL},
+    {"load-font-from-memory", cfun_LoadFontFromMemory, NULL},
     {"unload-font", cfun_UnloadFont, NULL},
     {"draw-fps", cfun_DrawFPS, NULL},
     {"draw-text", cfun_DrawText, NULL},

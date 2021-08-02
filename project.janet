@@ -1,5 +1,5 @@
-( declare-project
-  :name "jaylib"
+(declare-project
+  :name "freja-jaylib"
   :author "Calvin Rose <calsrose@gmail.com>")
 
 (def o (os/which))
@@ -20,7 +20,7 @@
     '["-lpthread"]))
 
 (declare-native
-  :name "jaylib"
+  :name "freja-jaylib"
   
   :cflags [;default-cflags ;cflags]
   
@@ -52,4 +52,4 @@
 
 # `jpm run repl` to run a repl with access to jaylib
 (phony "repl" ["build"]
-       (os/execute ["janet" "-l" "build/jaylib"] :p))
+       (os/execute ["janet" "-l" "build/freja-jaylib"] :p))

@@ -14,12 +14,12 @@
 #include "rlgl.h"
 
 JANET_MODULE_ENTRY(JanetTable *env) {
-    janet_cfuns(env, "jaylib", core_cfuns);
-    janet_cfuns(env, "jaylib", shapes_cfuns);
-    janet_cfuns(env, "jaylib", audio_cfuns);
-    janet_cfuns(env, "jaylib", gesture_cfuns);
-    janet_cfuns(env, "jaylib", text_cfuns);
-    janet_cfuns(env, "jaylib", image_cfuns);
-    janet_cfuns(env, "jaylib", threed_cfuns);
-    janet_cfuns(env, "jaylib", rlgl_cfuns);
+    janet_cfuns(env, "freja-jaylib", core_cfuns);
+    janet_cfuns(env, "freja-jaylib", shapes_cfuns);
+    janet_cfuns(env, "freja-jaylib", audio_cfuns);
+    janet_cfuns(env, "freja-jaylib", gesture_cfuns);
+    janet_cfuns(env, "freja-jaylib", text_cfuns);
+    janet_cfuns(env, "freja-jaylib", image_cfuns);
+    janet_cfuns(env, "freja-jaylib", threed_cfuns);
+    janet_cfuns(env, "freja-jaylib", rlgl_cfuns);
 }

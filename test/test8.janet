@@ -1,0 +1,1 @@
+(use ../build/freja-jaylib)

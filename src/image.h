@@ -116,6 +116,36 @@ static Janet cfun_GetScreenData(int32_t argc, Janet *argv) {
     return janet_wrap_abstract(image);
 }
 
+static Janet cfun_UpdateTextureRec(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 3);
+    Texture2D texture = *jaylib_gettexture2d(argv, 0);
+    Rectangle rec = jaylib_getrect(argv, 1);
+
+    const Janet *els = NULL;
+    int32_t len = 0;
+    if (janet_indexed_view(argv[2], &els, &len)) {
+        Color *pixels = (Color *)malloc(rec.width * rec.height * sizeof(Color));
+
+        for (int i = 0; i < len; i++) {
+            int64_t value = janet_getinteger64(els, i);
+            Color c = (Color) {
+                ((value >> 24)  & 0xFF),
+                ((value >> 16)  & 0xFF),
+                ((value >> 8) & 0xFF),
+                ((value >> 0) & 0xFF)
+            };
+            pixels[i] = c;
+        }
+
+        UpdateTextureRec(texture, rec, pixels);
+        free(pixels);
+    } else {
+        janet_panicf("second argument must be indexable %v", argv[2]);
+    }
+
+    return argv[0];
+}
+
 static Janet cfun_ImageCopy(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 1);
     Image image = *jaylib_getimage(argv, 0);
@@ -657,6 +687,7 @@ static const JanetReg image_cfuns[] = {
     {"get-image-dimensions", cfun_GetImageDimensions, NULL},
     {"get-texture-data", cfun_GetTextureData, NULL},
     {"get-screen-data", cfun_GetScreenData, NULL},
+    {"update-texture-rec", cfun_UpdateTextureRec, NULL},
     {"image-copy", cfun_ImageCopy, NULL},
     {"image-from-image", cfun_ImageFromImage, NULL},
     {"image-to-pot", cfun_ImageToPOT, NULL},

@@ -1,4 +1,4 @@
-(use ../build/jaylib)
+(use ../build/freja-jaylib)
 
 (set-config-flags
   :msaa-4x-hint)

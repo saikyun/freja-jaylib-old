@@ -214,7 +214,8 @@
 [ ] int GetPixelDataSize(int width, int height, int format)
 [x] Image GetTextureData(Texture2D texture)
 [x] Image GetScreenData(void)
-[ ] void UpdateTexture(Texture2D texture, const void *pixels)
+[/] void UpdateTexture(Texture2D texture, const void *pixels) -- Only works with textures of format PIXELFORMAT_UNCOMPRESSED_R8G8B8A8, to fix this, check raylib's ImageDrawPixel which converts depending on format
+[ ] void UpdateTextureRec(Texture2D texture, Rectangle rec, const void *pixels);
 
 // Image manipulation functions
 [x] Image ImageCopy(Image image)

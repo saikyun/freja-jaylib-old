@@ -1,4 +1,4 @@
-(use ../build/jaylib)
+(use ../build/freja-jaylib)
 
 (set-trace-log-callback |(print $0 ": " $1))
 

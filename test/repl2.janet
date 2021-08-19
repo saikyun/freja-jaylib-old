@@ -1,5 +1,5 @@
 (use ../build/jaylib)
-(import ./mplus2 :as f)
+(import ./mplus :as f)
 
 (set-config-flags
   :msaa-4x-hint)
@@ -40,9 +40,10 @@
   #  (default font (load-font "test/pdos.ttf"))
   (default font (load-font-from-memory ".otf"
                                        f/font
-                                       3 24
+                                       46557
+22
                                        (string/bytes " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHI\nJKLMNOPQRSTUVWXYZ[]^_`abcdefghijklmn\nopqrstuvwxyz{|}~\\")))
-  (default fontsize 16)
+  (default fontsize 22)
   (default max-output 5000)
   (default spacing -1)
 

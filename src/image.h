@@ -109,10 +109,10 @@ static Janet cfun_GetImageData(int32_t argc, Janet *argv) {
         for (int x = 0; x < image.width; x++) {
             Color c = colors[y * image.width + x];
             Janet *t = janet_tuple_begin(4);
-            t[0] = janet_wrap_integer(c.r);
-            t[1] = janet_wrap_integer(c.g);
-            t[2] = janet_wrap_integer(c.b);
-            t[3] = janet_wrap_integer(c.a);
+            t[0] = janet_wrap_number(((double)c.r) / 255);
+            t[1] = janet_wrap_number(((double)c.g) / 255);
+            t[2] = janet_wrap_number(((double)c.b) / 255);
+            t[3] = janet_wrap_number(((double)c.a) / 255);
             janet_array_push(acolors, janet_wrap_tuple(janet_tuple_end(t)));
         }
     }

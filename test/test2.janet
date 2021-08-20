@@ -18,7 +18,7 @@
 
 (loop [y :range [0 100]
        x :range [0 100]]
-  (put buf (+ (* y 100) x) 0xffff00ff))
+  (put buf (+ (* y 100) x) 0xff1100ff))
 
 (update-texture-rec
   (get-render-texture t2)

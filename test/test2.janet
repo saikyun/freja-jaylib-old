@@ -25,6 +25,8 @@
   [0 0 100 100]
   buf)
 
+(pp (get-image-data (get-texture-data (get-render-texture t2))))
+
 (def cells (gen-image-cellular 100 100 10))
 (def cells-t (load-texture-from-image cells))
 

@@ -100,6 +100,26 @@ static Janet cfun_UnloadRenderTexture(int32_t argc, Janet *argv) {
     return janet_wrap_nil();
 }
 
+static Janet cfun_GetImageData(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 1);
+    Image image = *jaylib_getimage(argv, 0);
+    Color *colors = GetImageData(image);
+    JanetArray *acolors = janet_array(image.height * image.width);
+    for (int y = 0; y < image.height; y++) {
+        for (int x = 0; x < image.width; x++) {
+            Color c = colors[y * image.width + x];
+            Janet *t = janet_tuple_begin(4);
+            t[0] = janet_wrap_integer(c.r);
+            t[1] = janet_wrap_integer(c.g);
+            t[2] = janet_wrap_integer(c.b);
+            t[3] = janet_wrap_integer(c.a);
+            janet_array_push(acolors, janet_wrap_tuple(janet_tuple_end(t)));
+        }
+    }
+    UnloadImageColors(colors);
+    return janet_wrap_array(acolors);
+}
+
 static Janet cfun_GetTextureData(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 1);
     Texture2D texture = *jaylib_gettexture2d(argv, 0);
@@ -684,6 +704,7 @@ static const JanetReg image_cfuns[] = {
     {"unload-image", cfun_UnloadImage, NULL},
     {"unload-texture", cfun_UnloadTexture, NULL},
     {"unload-render-texture", cfun_UnloadRenderTexture, NULL},
+    {"get-image-data", cfun_GetImageData, NULL},
     {"get-image-dimensions", cfun_GetImageDimensions, NULL},
     {"get-texture-data", cfun_GetTextureData, NULL},
     {"get-screen-data", cfun_GetScreenData, NULL},

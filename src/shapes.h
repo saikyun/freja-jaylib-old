@@ -331,6 +331,18 @@ static Janet cfun_CheckCollisionRecs(int32_t argc, Janet *argv) {
     }
 }
 
+static Janet cfun_CheckCollisionCircleRec(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 3);
+    Vector2 pos = jaylib_getvec2(argv, 0);
+    float radius = janet_getnumber(argv, 1);
+    Rectangle rec = jaylib_getrect(argv, 2);
+    if (CheckCollisionCircleRec(pos, radius, rec)) {
+        return janet_wrap_true();
+    } else {
+        return janet_wrap_false();
+    }
+}
+
 static JanetReg shapes_cfuns[] = {
     {"draw-pixel", cfun_DrawPixel, NULL},
     {"draw-pixel-v", cfun_DrawPixelV, NULL},
@@ -363,5 +375,6 @@ static JanetReg shapes_cfuns[] = {
     {"draw-triangle-fan", cfun_DrawTriangleFan, NULL},
     {"draw-poly", cfun_DrawPoly, NULL},
     {"check-collision-recs", cfun_CheckCollisionRecs, NULL},
+    {"check-collision-circle-rec", cfun_CheckCollisionCircleRec, NULL},
     {NULL, NULL, NULL}
 };

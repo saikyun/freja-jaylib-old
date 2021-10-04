@@ -20,6 +20,9 @@
 (def mat (get-model-material model 0))
 (set-material-texture mat texture :diffuse)
 
+(def map-pixels (get-image-data img))
+(unload-image img)
+
 (def map-pos [-16 0 -8])
 
 (set-camera-mode c :orbital)

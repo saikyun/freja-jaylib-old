@@ -21,6 +21,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
   (begin-drawing)
 
   (clear-background :ray-white)
+
+  (begin-scissor-mode ;(get-mouse-position) 300 200)
   (let [[x y] (get-mouse-position)]
     (draw-circle-gradient x y 31.4 :lime :red)
     (draw-poly [500 200] 5 40 rot :magenta)
@@ -32,6 +34,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
       [x (- y 10)]
       [x (+ y 10)]
       4 :sky-blue))
+  (end-scissor-mode)
 
   (if (key-pressed? :space)
     (trace-log :info (string/repeat "BLAH" 1000)))

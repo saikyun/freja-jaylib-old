@@ -819,6 +819,30 @@ static Janet cfun_EndTextureMode(int32_t argc, Janet *argv) {
     return janet_wrap_nil();
 }
 
+static Janet cfun_BeginScissorMode(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 4);
+    int x = janet_getinteger(argv, 0);
+    int y = janet_getinteger(argv, 1);
+    int w = janet_getinteger(argv, 2);
+    int h = janet_getinteger(argv, 3);
+    BeginScissorMode(x, y, w, h);
+    return janet_wrap_nil();
+}
+
+static Janet cfun_EndScissorMode(int32_t argc, Janet *argv) {
+    (void) argv;
+    janet_fixarity(argc, 0);
+    EndScissorMode();
+    return janet_wrap_nil();
+}
+
+static Janet cfun_GetCameraPosition(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 1);
+    Camera3D *camera = jaylib_getcamera3d(argv, 0);
+    Janet pos[2] = { janet_wrap_number(camera->position.x), janet_wrap_number(camera->position.y) };
+    return janet_wrap_tuple(janet_tuple_n(pos, 2));
+}
+
 static Janet cfun_SetCameraMode(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 2);
     Camera3D *camera = jaylib_getcamera3d(argv, 0);
@@ -968,9 +992,12 @@ static JanetReg core_cfuns[] = {
     {"begin-mode-3d", cfun_BeginMode3D, NULL},
     {"end-mode-3d", cfun_EndMode3D, NULL},
     {"begin-texture-mode", cfun_BeginTextureMode, NULL},
+    {"end-scissor-mode", cfun_EndScissorMode, NULL},
+    {"begin-scissor-mode", cfun_BeginScissorMode, NULL},
     {"end-texture-mode", cfun_EndTextureMode, NULL},
     {"camera-2d", cfun_Camera2D, NULL},
     {"camera-3d", cfun_Camera3D, NULL},
+    {"get-camera-position", cfun_GetCameraPosition, NULL},
     {"set-camera-mode", cfun_SetCameraMode, NULL},
     {"update-camera", cfun_UpdateCamera, NULL},
     {"set-camera-pan-control", cfun_SetCameraPanControl, NULL},

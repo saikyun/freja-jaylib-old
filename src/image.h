@@ -120,6 +120,26 @@ static Janet cfun_GetImageData(int32_t argc, Janet *argv) {
     return janet_wrap_array(acolors);
 }
 
+static Janet cfun_LoadImageColors(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 1);
+    Image image = *jaylib_getimage(argv, 0);
+    Color *colors = LoadImageColors(image);
+    JanetArray *acolors = janet_array(image.height * image.width);
+    for (int y = 0; y < image.height; y++) {
+        for (int x = 0; x < image.width; x++) {
+            Color c = colors[y * image.width + x];
+            Janet *t = janet_tuple_begin(4);
+            t[0] = janet_wrap_number(((double)c.r) / 255);
+            t[1] = janet_wrap_number(((double)c.g) / 255);
+            t[2] = janet_wrap_number(((double)c.b) / 255);
+            t[3] = janet_wrap_number(((double)c.a) / 255);
+            janet_array_push(acolors, janet_wrap_tuple(janet_tuple_end(t)));
+        }
+    }
+    UnloadImageColors(colors);
+    return janet_wrap_array(acolors);
+}
+
 static Janet cfun_GetTextureData(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 1);
     Texture2D texture = *jaylib_gettexture2d(argv, 0);

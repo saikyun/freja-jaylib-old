@@ -416,6 +416,33 @@ static Image *jaylib_getimage(const Janet *argv, int32_t n) {
     return ((Image *)janet_getabstract(argv, n, &AT_Image));
 }
 
+static const JanetAbstractType AT_Mesh = {
+    "jaylib/mesh",
+    JANET_ATEND_NAME
+};
+
+static Mesh *jaylib_getmesh(const Janet *argv, int32_t n) {
+    return ((Mesh *)janet_getabstract(argv, n, &AT_Mesh));
+}
+
+static const JanetAbstractType AT_Model = {
+    "jaylib/model",
+    JANET_ATEND_NAME
+};
+
+static Model *jaylib_getmodel(const Janet *argv, int32_t n) {
+    return ((Model *)janet_getabstract(argv, n, &AT_Model));
+}
+
+static const JanetAbstractType AT_Material = {
+    "jaylib/material",
+    JANET_ATEND_NAME
+};
+
+static Material *jaylib_getmaterial(const Janet *argv, int32_t n) {
+    return ((Material *)janet_getabstract(argv, n, &AT_Material));
+}
+
 static const JanetAbstractType AT_Wave = {
     "jaylib/wave",
     JANET_ATEND_NAME

@@ -1,4 +1,4 @@
-(use ../build/jaylib)
+(use ../build/freja-jaylib)
 
 (set-config-flags :msaa-4x-hint)
 
@@ -44,6 +44,9 @@
   (each x [1 2.4 3.3 3.9 4.4 5]
     (def s (/ 2 x))
     (draw-cube-texture lenna-t [2 x 2] s s s :white))
+
+  (draw-billboard c lenna-t [0 0 2] 2 :white)
+
   (end-mode-3d)
 
   (end-drawing))

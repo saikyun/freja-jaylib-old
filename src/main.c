@@ -12,6 +12,7 @@
 #include "image.h"
 #include "3d.h"
 #include "rlgl.h"
+#include "models.h"
 
 JANET_MODULE_ENTRY(JanetTable *env) {
     janet_cfuns(env, "freja-jaylib", core_cfuns);
@@ -22,4 +23,5 @@ JANET_MODULE_ENTRY(JanetTable *env) {
     janet_cfuns(env, "freja-jaylib", image_cfuns);
     janet_cfuns(env, "freja-jaylib", threed_cfuns);
     janet_cfuns(env, "freja-jaylib", rlgl_cfuns);
+    janet_cfuns(env, "freja-jaylib", models_cfuns);
 }

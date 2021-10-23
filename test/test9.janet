@@ -27,17 +27,78 @@
 
 (set-camera-mode c :orbital)
 
+(def rt (load-render-texture 300
+                             300))
+
 (while (not (window-should-close))
   (update-camera c)
+
   (begin-drawing)
+
+  (rl-push-matrix)
+  (rl-translatef 0 100 0)
+
+  (rl-load-identity)
+
+  (do
+    (begin-texture-mode rt)
+    (rl-draw-render-batch-active)
+
+    (clear-background :green)
+
+    (rl-draw-render-batch-active)
+
+    (do
+      (begin-mode-3d c)
+      (rl-draw-render-batch-active)
+      (draw-model model map-pos 1 :white)
+      (rl-draw-render-batch-active)
+      (end-mode-3d))
+
+    (rl-draw-render-batch-active)
+
+    (end-texture-mode))
+
+  (rl-pop-matrix)
+
   (clear-background :black)
 
-  (begin-mode-3d c)
+  (draw-rectangle 0 0 100 100 :blue)
 
-  (draw-model model map-pos 1 :white)
+  (rl-push-matrix)
 
-  (end-mode-3d)
+  (draw-rectangle 0 0 150 100 :orange)
 
+  (comment
+    (rl-push-matrix)
+
+    (rl-load-identity)
+
+    (do
+      (begin-mode-3d c)
+      (rl-draw-render-batch-active)
+      (draw-model model map-pos 1 :white)
+      (rl-draw-render-batch-active)
+      (end-mode-3d))
+
+    (rl-pop-matrix))
+
+  (rl-translatef 0 100 0)
+
+  #  (rl-draw-render-batch-active)
+
+  (draw-rectangle 0 50 100 100 :red)
+  #  (rl-draw-render-batch-active)
+
+  (rl-pop-matrix)
+
+  (do comment
+    (draw-texture-pro (get-render-texture rt)
+                      [0 0 300 -300]
+                      [200 0 300 300]
+                      [0 0]
+                      0
+                      :white))
   (end-drawing))
 
 (close-window)

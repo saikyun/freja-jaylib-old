@@ -839,8 +839,30 @@ static Janet cfun_EndScissorMode(int32_t argc, Janet *argv) {
 static Janet cfun_GetCameraPosition(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 1);
     Camera3D *camera = jaylib_getcamera3d(argv, 0);
-    Janet pos[2] = { janet_wrap_number(camera->position.x), janet_wrap_number(camera->position.y) };
-    return janet_wrap_tuple(janet_tuple_n(pos, 2));
+    Janet pos[3] = { janet_wrap_number(camera->position.x), janet_wrap_number(camera->position.y), janet_wrap_number(camera->position.z) };
+    return janet_wrap_tuple(janet_tuple_n(pos, 3));
+}
+
+static Janet cfun_SetCameraPosition(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 2);
+    Camera3D *camera = jaylib_getcamera3d(argv, 0);
+    Vector3 pos = jaylib_getvec3(argv, 1);
+    camera->position = pos;
+    return janet_wrap_nil();
+}
+
+static Janet cfun_GetCameraTarget(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 1);
+    Camera3D *camera = jaylib_getcamera3d(argv, 0);
+    Janet target[3] = { janet_wrap_number(camera->target.x), janet_wrap_number(camera->target.y), janet_wrap_number(camera->target.z) };
+    return janet_wrap_tuple(janet_tuple_n(target, 3));
+}
+
+static Janet cfun_GetCameraUp(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 1);
+    Camera3D *camera = jaylib_getcamera3d(argv, 0);
+    Janet target[3] = { janet_wrap_number(camera->up.x), janet_wrap_number(camera->up.y), janet_wrap_number(camera->up.z) };
+    return janet_wrap_tuple(janet_tuple_n(target, 3));
 }
 
 static Janet cfun_SetCameraMode(int32_t argc, Janet *argv) {
@@ -998,6 +1020,9 @@ static JanetReg core_cfuns[] = {
     {"camera-2d", cfun_Camera2D, NULL},
     {"camera-3d", cfun_Camera3D, NULL},
     {"get-camera-position", cfun_GetCameraPosition, NULL},
+    {"set-camera-position", cfun_SetCameraPosition, NULL},
+    {"get-camera-target", cfun_GetCameraTarget, NULL},
+    {"get-camera-up", cfun_GetCameraUp, NULL},
     {"set-camera-mode", cfun_SetCameraMode, NULL},
     {"update-camera", cfun_UpdateCamera, NULL},
     {"set-camera-pan-control", cfun_SetCameraPanControl, NULL},

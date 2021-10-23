@@ -67,6 +67,16 @@ static Janet cfun_rlTranslatef(int32_t argc, Janet *argv) {
     return janet_wrap_nil();
 }
 
+static Janet cfun_rlRotatef(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 4);
+    float angle = (float) janet_getnumber(argv, 0);
+    float x = (float) janet_getnumber(argv, 1);
+    float y = (float) janet_getnumber(argv, 2);
+    float z = (float) janet_getnumber(argv, 3);
+    rlRotatef(angle, x, y, z);
+    return janet_wrap_nil();
+}
+
 static Janet cfun_rlScalef(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 3);
     float x = (float) janet_getnumber(argv, 0);
@@ -116,6 +126,13 @@ static Janet cfun_rlMultMatrixfScreenScale(int32_t argc, Janet *argv) {
     return janet_wrap_nil();
 }
 
+static Janet cfun_rlDrawRenderBatchActive(int32_t argc, Janet *argv) {
+    (void) argv;
+    janet_fixarity(argc, 0);
+    rlDrawRenderBatchActive();
+    return janet_wrap_nil();
+}
+
 static JanetReg rlgl_cfuns[] = {
     {"rl-viewport", cfun_rlViewport, NULL},
     {"rl-matrix-mode", cfun_rlMatrixMode, NULL},
@@ -124,9 +141,11 @@ static JanetReg rlgl_cfuns[] = {
     {"rl-pop-matrix", cfun_rlPopMatrix, NULL},
     {"rl-load-identity", cfun_rlLoadIdentity, NULL},
     {"rl-translatef", cfun_rlTranslatef, NULL},
+    {"rl-rotatef", cfun_rlRotatef, NULL},
     {"rl-scalef", cfun_rlScalef, NULL},
     {"rl-enable-scissor-test", cfun_rlEnableScissorTest, NULL},
     {"rl-scissor", cfun_rlScissor, NULL},
     {"rl-mult-matrixf-screen-scale", cfun_rlMultMatrixfScreenScale, NULL},
+    {"rl-draw-render-batch-active", cfun_rlDrawRenderBatchActive, NULL},
     {NULL, NULL, NULL}
 };

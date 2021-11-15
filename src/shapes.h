@@ -139,6 +139,17 @@ static Janet cfun_DrawCircleLines(int32_t argc, Janet *argv) {
     return janet_wrap_nil();
 }
 
+static Janet cfun_DrawEllipse(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 5);
+    int centerX = janet_getinteger(argv, 0);
+    int centerY = janet_getinteger(argv, 1);
+    float radiusH = (float) janet_getnumber(argv, 2);
+    float radiusV = (float) janet_getnumber(argv, 3);
+    Color c = jaylib_getcolor(argv, 4);
+    DrawEllipse(centerX, centerY, radiusH, radiusV, c);
+    return janet_wrap_nil();
+}
+
 static Janet cfun_DrawRing(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 7);
     Vector2 center = jaylib_getvec2(argv, 0);
@@ -357,6 +368,7 @@ static JanetReg shapes_cfuns[] = {
     {"draw-circle-v", cfun_DrawCircleV, NULL},
     {"draw-circle-gradient", cfun_DrawCircleGradient, NULL},
     {"draw-circle-lines", cfun_DrawCircleLines, NULL},
+    {"draw-ellipse", cfun_DrawEllipse, NULL},
     {"draw-ring", cfun_DrawRing, NULL},
     {"draw-ring-lines", cfun_DrawRingLines, NULL},
     {"draw-rectangle", cfun_DrawRectangle, NULL},

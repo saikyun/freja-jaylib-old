@@ -214,6 +214,13 @@ static Janet cfun_GetMonitorPhysicalWidth(int32_t argc, Janet *argv) {
     return janet_wrap_integer(GetMonitorPhysicalWidth(monitor));
 }
 
+static Janet cfun_GetWindowScaleDPI(int32_t argc, Janet *argv) {
+    (void) argv;
+    janet_fixarity(argc, 0);
+    Vector2 scale = GetWindowScaleDPI();
+    return jaylib_wrap_vec2(scale);
+}
+
 static Janet cfun_GetMonitorPhysicalHeight(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 1);
     int monitor = janet_getinteger(argv, 0);
@@ -500,6 +507,19 @@ static Janet cfun_GetKeyPressed(int32_t argc, Janet *argv) {
     (void) argv;
     janet_arity(argc, 0, 1);
     int key = GetKeyPressed();
+    if (argc == 0 || !janet_truthy(argv[1])) {
+        for (unsigned i = 0; i < (sizeof(key_defs) / sizeof(KeyDef)); i++) {
+            if (key_defs[i].key == key)
+                return janet_ckeywordv(key_defs[i].name);
+        }
+    }
+    return janet_wrap_integer(key);
+}
+
+static Janet cfun_GetCharPressed(int32_t argc, Janet *argv) {
+    (void) argv;
+    janet_arity(argc, 0, 1);
+    int key = GetCharPressed();
     if (argc == 0 || !janet_truthy(argv[1])) {
         for (unsigned i = 0; i < (sizeof(key_defs) / sizeof(KeyDef)); i++) {
             if (key_defs[i].key == key)
@@ -884,6 +904,7 @@ static JanetReg core_cfuns[] = {
     {"get-monitor-height", cfun_GetMonitorHeight, NULL},
     {"get-monitor-physical-width", cfun_GetMonitorPhysicalWidth, NULL},
     {"get-monitor-physical-height", cfun_GetMonitorPhysicalHeight, NULL},
+    {"get-window-scale-dpi", cfun_GetWindowScaleDPI, NULL},
     {"get-monitor-name", cfun_GetMonitorName, NULL},
     {"get-clipboard-text", cfun_GetClipboardText, NULL},
     {"set-clipboard-text", cfun_SetClipboardText, NULL},
@@ -912,6 +933,7 @@ static JanetReg core_cfuns[] = {
     {"key-up?", cfun_IsKeyUp, NULL},
     {"key-down?", cfun_IsKeyDown, NULL},
     {"get-key-pressed", cfun_GetKeyPressed, NULL},
+    {"get-char-pressed", cfun_GetCharPressed, NULL},
     {"set-exit-key", cfun_SetExitKey, NULL},
     {"gamepad-available?", cfun_IsGamepadAvailable, NULL},
     {"gamepad-button-down?", cfun_IsGamepadButtonDown, NULL},

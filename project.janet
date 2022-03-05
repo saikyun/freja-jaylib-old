@@ -1,5 +1,5 @@
-( declare-project
-  :name "jaylib"
+(declare-project
+  :name "freja-jaylib"
   :author "Calvin Rose <calsrose@gmail.com>")
 
 (def o (os/which))
@@ -7,7 +7,7 @@
 (def cflags
   (case o
     :macos '["-Iraylib/src" "-ObjC" "-Iraylib/src/external/glfw/include"]
-    :windows ["-Iraylib/src" "-Iraylib/src/external/glfw/include" ]
+    :windows ["-Iraylib/src" "-Iraylib/src/external/glfw/include"]
     #default
     '["-Iraylib/src"]))
 
@@ -20,7 +20,7 @@
     '["-lpthread"]))
 
 (declare-native
-  :name "jaylib"
+  :name "freja-jaylib"
 
   :cflags [;default-cflags ;cflags]
 

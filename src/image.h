@@ -116,7 +116,7 @@ static Janet cfun_LoadImageFromScreen(int32_t argc, Janet *argv) {
     return janet_wrap_abstract(image);
 }
 
-static Janet cfun_RenderTextureToTexture(int32_t argc, Janet *argv) {
+static Janet cfun_GetRenderTextureTexture2d(int32_t argc, Janet *argv) {
   janet_fixarity(argc, 1);
   RenderTexture renderTexture = *jaylib_getrendertexture(argv, 0);
   Texture2D *texture = janet_abstract(&AT_Texture2D, sizeof(Texture2D));
@@ -645,7 +645,7 @@ static const JanetReg image_cfuns[] = {
     {"get-image-dimensions", cfun_GetImageDimensions, NULL},
     {"load-image-from-texture", cfun_LoadImageFromTexture, NULL},
     {"load-image-from-screen", cfun_LoadImageFromScreen, NULL},
-    {"render-texture->texture", cfun_RenderTextureToTexture, NULL},
+    {"get-render-texture-texture2d", cfun_GetRenderTextureTexture2d, NULL},
     {"image-copy", cfun_ImageCopy, NULL},
     {"image-from-image", cfun_ImageFromImage, NULL},
     {"image-to-pot", cfun_ImageToPOT, NULL},
